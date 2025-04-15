@@ -1,0 +1,6 @@
+<h2>اختار نوع الطلب</h2>
+<ul>
+    {% for key, label in types %}
+    <li><a href="{% url 'make_request' key %}">{{ label }}</a></li>
+    {% endfor %}
+</ul>
