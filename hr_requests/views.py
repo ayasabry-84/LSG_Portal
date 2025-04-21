@@ -7,12 +7,17 @@ def request_options_view(request):
 
 def make_request_view(request, request_type):
     if request.method == 'POST':
-        form = HRRequestForm(request.POST)
+        form = HRRequestForm(request.POST, request.FILES, request_type=request_type)
         if form.is_valid():
             hr_request = form.save(commit=False)
             hr_request.request_type = request_type
             hr_request.save()
             return render(request, 'hr_requests/success.html', {'request_type': dict(REQUEST_TYPES)[request_type]})
     else:
-        form = HRRequestForm()
-    return render(request, 'hr_requests/request_form.html', {'form': form, 'request_type': dict(REQUEST_TYPES)[request_type]})
+        form = HRRequestForm(request_type=request_type)
+    
+    return render(request, 'hr_requests/request_form.html', {
+        'form': form, 
+        'request_type': dict(REQUEST_TYPES)[request_type],
+        'is_vacation': request_type == 'vacation'
+    })
