@@ -1,0 +1,32 @@
+{% extends 'canteen/base.html' %}
+{% block title %}Menu{% endblock %}
+{% block content %}
+<h1 class="mb-4">Canteen Menu</h1>
+
+{% if is_hr_admin %}
+<a href="{% url 'add_meal' %}" class="btn btn-success">Add Meal</a>
+{% endif %}
+
+<div class="row">
+    {% for meal in meals %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            {% if meal.image %}
+            <img src="{{ meal.image.url }}" class="card-img-top" alt="{{ meal.name }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ meal.name }}</h5>
+                <p class="card-text">{{ meal.description }}</p>
+                <p class="text-muted">Served at: {{ meal.time|time:"H:i" }}</p>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                    <span class="h5">${{ meal.price }}</span>
+                    <a href="{% url 'meal_detail' meal.pk %}" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

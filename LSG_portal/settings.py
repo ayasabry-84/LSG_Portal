@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hr_requests',
+    'canteen',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

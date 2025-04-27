@@ -1,0 +1,14 @@
+{% extends 'canteen/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1 class="mb-4">{{ title }}</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form.as_p }}
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{% url 'meal_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

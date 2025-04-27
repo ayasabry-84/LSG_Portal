@@ -1,0 +1,26 @@
+{% extends 'canteen/base.html' %}
+{% block title %}{{ meal.name }}{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        {% if meal.image %}
+        <img src="{{ meal.image.url }}" class="img-fluid rounded mb-4" alt="{{ meal.name }}">
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h1>{{ meal.name }}</h1>
+        <p class="lead">${{ meal.price }}</p>
+        <p>Served at: {{ meal.time|time:"H:i" }}</p>
+
+        <h4>Description</h4>
+        <p>{{ meal.description }}</p>
+        {% if is_hr_admin %}
+        <div class="mt-4">
+            <a href="{% url 'edit_meal' meal.pk %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'delete_meal' meal.pk %}" class="btn btn-danger">Delete</a>
+        </div>
+        {% endif %}
+        <a href="{% url 'meal_list' %}" class="btn btn-secondary mt-2">Back to Menu</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'canteen/base.html' %}
+{% block title %}Delete Meal{% endblock %}
+{% block content %}
+<h1 class="mb-4">Delete Meal</h1>
+
+<p>Are you sure you want to delete "{{ meal.name }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    <a href="{% url 'meal_detail' meal.pk %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
