@@ -1,0 +1,96 @@
+<!-- <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اللوحة الرئيسية</title>
+</head>
+<body>
+    <h1>مرحباً، {{ user.full_name }}</h1>
+    <p>الرقم الوظيفي: {{ user.job_id }}</p>
+    <p>القسم: {{ user.department }}</p>
+    <p>تاريخ الميلاد: {{ user.birth_date }}</p>
+
+    <a href="{% url 'logout' %}">تسجيل الخروج</a>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: white;
+            height: 100vh;
+            padding-top: 20px;
+            position: fixed;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .welcome {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .info p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <a href="{% url 'dashboard' %}">🏠 Dashboard</a>
+        <a href="#">شئون العاملين</a>
+        <a href="#">تدريبات</a>
+        <a href="#">كانتين</a>
+        <a href="#">شئون قانونيه</a>
+        <a href="#">سياسات الشركه</a>
+        <a href="{% url 'logout' %}">🚪 تسجيل الخروج</a>
+    </div>
+
+    <div class="content">
+        <div class="welcome">مرحبًا {{ user.first_name }} 👋</div>
+
+        <div class="info">
+            <p><strong>الاسم:</strong> {{ user.full_name }}</p>
+            <p><strong>الرقم الوظيفي:</strong> {{ user.job_id }}</p>
+            <p><strong>القسم:</strong> {{ user.department }}</p>
+            <p><strong>تاريخ الميلاد:</strong> {{ user.date_of_birth }}</p>
+        </div>
+    </div>
+
+</body>
+</html>
+
