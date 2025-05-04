@@ -1,94 +1,253 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 5px;
-            color: #555;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        .error-message {
-            color: red;
-            font-size: 12px;
-            text-align: center;
-        }
-        .success-message {
-            color: green;
-            font-size: 14px;
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>تسجيل الدخول</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: #001D53 url("{% static 'images/image 5.png' %}") no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden; /* لمنع ظهور شريط التمرير */
+    }
+
+    .logo {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .logo img {
+      max-width: 150px;
+      height: auto;
+    }
+
+    .login-form {
+      padding: 40px;
+      border-radius: 10px;
+      width: 350px;
+      margin: 0 auto;
+      text-align: center;
+      margin-bottom: 120px; /* مساحة للقسم السفلي */
+    }
+
+    .login-form h2 {
+      margin-bottom: 20px;
+      border-bottom: 1px solid white;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 100%;
+      padding: 12px;
+      margin: 15px 0;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+    }
+
+    button {
+      background-color: #f4b400;
+      border: none;
+      padding: 12px 20px;
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 80%;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #e6ac00;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 20px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .footer-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    /* القسم السفلي - معدل مع التبديل */
+    .bottom-section {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      color: #001D53;
+      padding: 10px 0; /* تصغير الارتفاع */
+      display: flex;
+      flex-direction: row-reverse; /* عكس الترتيب */
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    /* الجزء الأيسر (الذي أصبح على اليمين بعد التبديل) */
+    .left-text {
+      display: flex;
+      flex-direction: row; /* لضمان ظهور النصوص بجانب بعضها */
+      gap: 50px; /* مسافة بين النصوص */
+      margin-left: 200px; /* بعد التبديل، استخدم margin-left */
+      margin-right: 0;
+      text-align: right;
+    }
+    .left-l-text {
+
+    }
+    .left-m-text {
+
+    }
+    .left-r-text {
+
+    }
+    /* النصوص داخل الجزء الأيسر */
+    .left-text p {
+      margin: 0 10px; /* مسافة بين الفقرات */
+    }
+
+    /* الجزء الأيمن (الذي أصبح على الشمال بعد التبديل) */
+    .right-icons {
+      display: flex;
+      /* gap: 30px; مسافة بين الأيقونات */
+      margin-right: 200px; /* بعد التبديل، استخدم margin-right */
+      margin-left: 0;
+      align-items: center;
+      gap: 150px;
+    }
+
+    /* الأيقونات */
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .icon-item img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 5px;
+    .alert {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: red;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+    }
+  </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>تسجيل الدخول</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="job_id">الرقم الوظيفي:</label>
-                <input type="text" id="job_id" name="job_id" placeholder="أدخل الرقم الوظيفي" required>
-            </div>
-            <div class="form-group">
-                <label for="password">كلمة المرور:</label>
-                <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="تسجيل الدخول">
-            </div>
-        </form>
-        {% if message %}
-            <div class="error-message">
-                <p>{{ message }}</p>
-            </div>
-        {% endif %}
+  <div class="logo">
+    <img src="{% static 'images/image 2.png' %}" alt="شعار الشركة" />
+  </div>
+
+  <div class="login-form">
+    <h2>أهلاً بعودتك!</h2>
+    {% if messages %}
+    <div class="alert alert-danger">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
     </div>
+{% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" id="job_id" name="job_id" placeholder="الرقم الوظيفي" required />
+      <input type="password" id="password" name="password" placeholder="كلمة المرور" required />
+      <button type="submit">تسجيل دخول</button>
+    </form>
+
+    <!-- <div class="footer">
+      <p>LSG Sky Chefs - مطار القاهرة الدولي</p>
+      <div class="footer-icons">
+        <span>📞 +20 (2) 22608038</span>
+        <span>📠 +20 (2) 22608054</span>
+      </div> -->
+    </div>
+  </div>
+
+  <!-- الجزء السفلي المعدل مع التبديل -->
+  <div class="bottom-section">
+    <div class="left-text">
+        <div class="left-r-text">
+       <p>FAX:+20 (2) 22608054</p>
+       <p>Phone:+20 (2) 22608038</p>
+      </div> 
+      <div class="left-m-text">
+        <p>Cairo International Airport</p>
+        <p>PCI Bux#10, Gda 35, Building 260</p>
+      </div>
+    <div class="left-l-text">
+        <p>LSC Sky Chefs</p>
+        <p>Gatering Egypt S.A.E</p>
+      </div>
+    </div>
+    <div class="right-icons">
+      <div class="icon-item">
+        <img src="{% static 'images/image.png' %}" alt="أيقونة 1" />
+        <span>Package Food Solutions</span>
+      </div>
+      <div class="icon-item">
+        <img src="{% static 'images/image 4.png' %}" alt="أيقونة 2" />
+        <span>Airline Catering</span>
+      </div>
+    </div>
+  </div>
 </body>
-</html>
+</html>                                                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

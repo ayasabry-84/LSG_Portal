@@ -1,96 +1,232 @@
-<!-- <!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اللوحة الرئيسية</title>
-</head>
-<body>
-    <h1>مرحباً، {{ user.full_name }}</h1>
-    <p>الرقم الوظيفي: {{ user.job_id }}</p>
-    <p>القسم: {{ user.department }}</p>
-    <p>تاريخ الميلاد: {{ user.birth_date }}</p>
-
-    <a href="{% url 'logout' %}">تسجيل الخروج</a>
-</body>
-</html> -->
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-        }
+<meta charset="UTF-8" />
+<title>Dashboard</title>
+<style>
+/* أساسي للجسم */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background: #001D53 url("{% static 'images/image 5.png' %}") no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
 
-        .sidebar {
-            width: 200px;
-            background-color: #333;
-            color: white;
-            height: 100vh;
-            padding-top: 20px;
-            position: fixed;
-        }
+/* زر ☰ */
+#menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px; /* تم تعديله للجانب الأيسر */
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 2001;
+  color: white;
+}
 
-        .sidebar a {
-            display: block;
-            color: white;
-            padding: 15px;
-            text-decoration: none;
-        }
+/* الـ Sidebar على الجانب الأيسر */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0; /* تم تعديلها للجانب الأيسر */
+  width: 250px;
+  height: 100vh;
+  background-color: rgba(51, 51, 51, 0.95);
+  box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  /* مخفية خارج الشاشة بشكل افتراضي */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 2000;
+  padding-top: 60px; /* مساحة للزر */
+}
+/* عند تفعيل الكلاس show يفتح الـ Sidebar */
+#sidebar.show {
+  transform: translateX(0);
+}
 
-        .sidebar a:hover {
-            background-color: #575757;
-        }
+/* روابط الـ Sidebar */
+#sidebar a {
+  display: block;
+  padding: 15px;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+#sidebar a:hover {
+  background-color: #575757;
+}
 
-        .content {
-            margin-left: 200px;
-            padding: 20px;
-            width: 100%;
-        }
+/* المحتوى الرئيسي */
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-top: 60px; /* مساحة للزر */
+}
 
-        .welcome {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
+/* ترحيب وبيانات المستخدم */
+.welcome {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.info {
+  background: rgba(255,255,255,0.2);
+  padding: 15px;
+  border-radius: 8px;
+}
+.info p {
+  margin: 10px 0;
+}
 
-        .info {
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 8px;
-        }
+   /* القسم السفلي - معدل مع التبديل */
+   .bottom-section {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      color: #001D53;
+      padding: 10px 0; /* تصغير الارتفاع */
+      display: flex;
+      flex-direction: row-reverse; /* عكس الترتيب */
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
 
-        .info p {
-            margin: 10px 0;
-        }
-    </style>
+    /* الجزء الأيسر (الذي أصبح على اليمين بعد التبديل) */
+    .left-text {
+      display: flex;
+      flex-direction: row; /* لضمان ظهور النصوص بجانب بعضها */
+      gap: 50px; /* مسافة بين النصوص */
+      margin-left: 200px; /* بعد التبديل، استخدم margin-left */
+      margin-right: 0;
+      text-align: right;
+    }
+    .left-l-text {}
+    .left-m-text {}
+    .left-r-text {}
+
+    /* النصوص داخل الجزء الأيسر */
+    .left-text p {
+      margin: 0 10px; /* مسافة بين الفقرات */
+    }
+
+    /* الجزء الأيمن (الذي أصبح على الشمال بعد التبديل) */
+    .right-icons {
+      display: flex;
+      margin-right: 200px; /* بعد التبديل، استخدم margin-right */
+      margin-left: 0;
+      align-items: center;
+      gap: 150px;
+    }
+
+    /* الأيقونات */
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .icon-item img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 5px;
+    }
+</style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <a href="{% url 'dashboard' %}">🏠 Dashboard</a>
-        <a href="#">شئون العاملين</a>
-        <a href="#">تدريبات</a>
-        <a href="#">كانتين</a>
-        <a href="#">شئون قانونيه</a>
-        <a href="#">سياسات الشركه</a>
-        <a href="{% url 'logout' %}">🚪 تسجيل الخروج</a>
-    </div>
+<!-- زر ☰ -->
+<button id="menu-toggle" title="القائمة">☰</button>
 
-    <div class="content">
-        <div class="welcome">مرحبًا {{ user.first_name }} 👋</div>
+<!-- الـ Sidebar على الجانب الأيسر -->
+<div id="sidebar">
+  <a href="{% url 'dashboard' %}">🏠 Dashboard</a>
+  <a href="#">شئون العاملين</a>
+  <a href="#">تدريبات</a>
+  <a href="#">كانتين</a>
+  <a href="#">شئون قانونيه</a>
+  <a href="#">سياسات الشركه</a>
+  <a href="{% url 'logout' %}">🚪 تسجيل الخروج</a>
+</div>
 
-        <div class="info">
-            <p><strong>الاسم:</strong> {{ user.full_name }}</p>
-            <p><strong>الرقم الوظيفي:</strong> {{ user.job_id }}</p>
-            <p><strong>القسم:</strong> {{ user.department }}</p>
-            <p><strong>تاريخ الميلاد:</strong> {{ user.date_of_birth }}</p>
-        </div>
+<!-- المحتوى الرئيسي -->
+<div class="content">
+  <!-- شعار الشركة -->
+  <div class="logo" style="text-align: center; margin-bottom:30px;">
+    <img src="{% static 'images/image 2.png' %}" alt="شعار الشركة" style="max-width:150px; height:auto;">
+  </div>
+  <!-- ترحيب وبيانات المستخدم -->
+  <div class="welcome">مرحبًا {{ user.full_name }} 👋</div>
+  <div class="info">
+    <p><strong>الاسم:</strong> {{ user.full_name }}</p>
+    <p><strong>الرقم الوظيفي:</strong> {{ user.job_id }}</p>
+    <p><strong>القسم:</strong> {{ user.department }}</p>
+    <!-- <p><strong>تاريخ الميلاد:</strong> {{ user.date_of_birth }}</p> -->
+  </div>
+</div>
+
+<!-- الجزء السفلي (footer) -->
+<div class="bottom-section">
+  <div class="left-text">
+    <div class="left-r-text">
+      <p>FAX:+20 (2) 22608054</p>
+      <p>Phone:+20 (2) 22608038</p>
+    </div> 
+    <div class="left-m-text">
+      <p>Cairo International Airport</p>
+      <p>PCI Bux#10, Gda 35, Building 260</p>
     </div>
+    <div class="left-l-text">
+      <p>LSC Sky Chefs</p>
+      <p>Gatering Egypt S.A.E</p>
+    </div>
+  </div>
+  <div class="right-icons">
+    <div class="icon-item">
+      <img src="{% static 'images/image.png' %}" alt="أيقونة 1" />
+      <span>Package Food Solutions</span>
+    </div>
+    <div class="icon-item">
+      <img src="{% static 'images/image 4.png' %}" alt="أيقونة 2" />
+      <span>Airline Catering</span>
+    </div>
+  </div>
+</div>
+
+<!-- سكربت التحكم في الـ Sidebar -->
+<script>
+const toggleBtn = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+
+// لفتح/إغلاق الـ Sidebar عند الضغط على الزر
+toggleBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('show');
+});
+
+// لإغلاق الـ Sidebar عند الضغط على أي رابط داخله
+sidebar.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    sidebar.classList.remove('show');
+  });
+});
+
+// لإغلاق الـ Sidebar عند الضغط خارجها
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#sidebar') && !e.target.closest('#menu-toggle')) {
+    sidebar.classList.remove('show');
+  }
+});
+</script>
 
 </body>
 </html>
-
